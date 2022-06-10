@@ -1,4 +1,3 @@
-const { AbiCoder } = require('ethers/lib/utils')
 const { artifacts, ethers } = require('hardhat')
 const hre = require('hardhat')
 const args = process.argv.slice(2)
@@ -25,11 +24,6 @@ async function printSelectors(contractName) {
   const coded = coder.encode(['bytes4[]'], [selectors])
 
   process.stdout.write(coded)
-}
-
-function getAbi(contractname) {
-  const abi = artifacts.readArtifactSync(contractname).abi
-  return abi
 }
 
 // We recommend this pattern to be able to use async/await everywhere
