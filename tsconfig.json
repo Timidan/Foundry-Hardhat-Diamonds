@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "declaration": true,
+    "rootDir": "./",
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@utils/*": ["./utils/*"],
+      "@scripts/*": ["./scripts/*"],
+      "@tests/*": ["tests/*"],
+      "@customTypes/*": ["./types/*"],
+      "@utils/": ["./utils/*"],
+      "@migrations/*": ["./migrations/*"],
+      "@typechain-types/*": ["./typechain-types/*"]
+    }
+  },
+  "include": ["./scripts", "./test", "./typechain"]
+}
