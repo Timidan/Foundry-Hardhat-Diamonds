@@ -1,5 +1,5 @@
-const ethers = require("ethers");
-const path = require("path/posix");
+import { ContractFactory, utils } from "ethers";
+import path from "path/posix";
 
 const args = process.argv.slice(2);
 
@@ -10,7 +10,10 @@ if (args.length != 1) {
   process.exit(1);
 }
 
-async function printSelectors(contractName, artifactFolderPath = "../out") {
+async function printSelectors(
+  contractName: string,
+  artifactFolderPath: string = "../out"
+) {
   const contractFilePath = path.join(
     artifactFolderPath,
     `${contractName}.sol`,
@@ -19,17 +22,17 @@ async function printSelectors(contractName, artifactFolderPath = "../out") {
   const contractArtifact = require(contractFilePath);
   const abi = contractArtifact.abi;
   const bytecode = contractArtifact.bytecode;
-  const target = new ethers.ContractFactory(abi, bytecode);
+  const target = new ContractFactory(abi, bytecode);
   const signatures = Object.keys(target.interface.functions);
 
-  const selectors = signatures.reduce((acc, val) => {
+  const selectors = signatures.reduce((acc: string[], val) => {
     if (val !== "init(bytes)") {
       acc.push(target.interface.getSighash(val));
     }
     return acc;
   }, []);
 
-  const coder = ethers.utils.defaultAbiCoder;
+  const coder = utils.defaultAbiCoder;
   const coded = coder.encode(["bytes4[]"], [selectors]);
 
   process.stdout.write(coded);
