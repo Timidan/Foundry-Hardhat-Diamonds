@@ -37,3 +37,12 @@ $ forge t
 Bonus: The [DiamondLoupefacet](contracts/facets/DiamondLoupeFacet.sol) uses an updated [LibDiamond](contracts/libraries//LibDiamond.sol) which utilises solidity custom errors to make debugging easier especially when upgrading diamonds. Take it for a spin!!
 
 Need some more clarity? message me [on twitter](https://twitter.com/Timidan_x), Or join the [EIP-2535 Diamonds Discord server](https://discord.gg/kQewPw2)
+
+
+### Verify
+
+This addition to the template allows you to verify your contracts on deployment. 
+An example `.env: .env.example` and hardhat config `example.hardhat.config.js` has been provided
+To verify, you need to include your etherscan API included.
+
+Enjoy
