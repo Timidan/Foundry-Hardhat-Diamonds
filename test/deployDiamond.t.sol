@@ -5,7 +5,7 @@ import "../contracts/interfaces/IDiamondCut.sol";
 import "../contracts/facets/DiamondCutFacet.sol";
 import "../contracts/facets/DiamondLoupeFacet.sol";
 import "../contracts/facets/OwnershipFacet.sol";
-import "../../lib/forge-std/src/Test.sol";
+import "forge-std/Test.sol";
 import "../contracts/Diamond.sol";
 
 contract DiamondDeployer is Test, IDiamondCut {
@@ -50,10 +50,9 @@ contract DiamondDeployer is Test, IDiamondCut {
         DiamondLoupeFacet(address(diamond)).facetAddresses();
     }
 
-    function generateSelectors(string memory _facetName)
-        internal
-        returns (bytes4[] memory selectors)
-    {
+    function generateSelectors(
+        string memory _facetName
+    ) internal returns (bytes4[] memory selectors) {
         string[] memory cmd = new string[](3);
         cmd[0] = "node";
         cmd[1] = "scripts/genSelectors.js";
