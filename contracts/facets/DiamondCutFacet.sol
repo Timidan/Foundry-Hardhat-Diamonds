@@ -8,6 +8,8 @@ pragma solidity ^0.8.0;
 
 import { IDiamondCut } from "../interfaces/IDiamondCut.sol";
 import { LibDiamond } from "../libraries/LibDiamond.sol";
+import { LibMultisig } from "../libraries/LibMultisig.sol";
+import { LibAppStorage } from "../libraries/LibAppStorage.sol";
 
 contract DiamondCutFacet is IDiamondCut {
     /// @notice Add/replace/remove any number of functions and optionally execute
@@ -21,7 +23,11 @@ contract DiamondCutFacet is IDiamondCut {
         address _init,
         bytes calldata _calldata
     ) external override {
-        LibDiamond.enforceIsContractOwner();
+        // Allow initial setup if no signers are set yet, or require multisig approval
+        LibAppStorage.AppStorage storage s = LibAppStorage.appStorage();
+        if (s.multisigSigners.length > 0) {
+            require(LibMultisig.isValidSigner(msg.sender), "Not a multisig signer");
+        }
         LibDiamond.diamondCut(_diamondCut, _init, _calldata);
     }
 }
